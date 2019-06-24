@@ -33,9 +33,9 @@ $tableName02 = 'user_table';
 
 // 読書記録データ登録用SQLを発行する
 function insertSQL($tableName){
-    $sql = "INSERT INTO $tableName(record_id, title, author, genre, reed_date, judge, impression,
+    $sql = "INSERT INTO $tableName(record_id, user_id, title, author, genre, reed_date, judge, impression,
     quotation_01, quotation_02, quotation_03, indate)
-    VALUES(NULL,:a1,:a2,:a3,:a4,:a5,:a6,:a7,:a8,:a9,sysdate())";
+    VALUES(NULL,:a1,:a2,:a3,:a4,:a5,:a6,:a7,:a8,:a9,:a10,sysdate())";
     return $sql;
 }
 

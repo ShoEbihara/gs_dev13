@@ -1,42 +1,14 @@
 <?php
 //必ずsession_startは最初に記述
 session_start();
+// セッション変数に保存されたuser_idを取得する
+$user_id = $_SESSION["user_id"];
+$user_name = $_SESSION["user_name"];
 
 // 関数を定義したファイルを読み込む
 require_once 'funcs.php';
 //ログイン認証チェック
 loginCheck();
-
-// // 検索条件に一致するデータを取り出す処理
-// if (isset($_POST['title'])) {
-//     $title = $_POST['title'];
-//     // tray~catch命令でDB接続関数getDb()を呼び出し接続を行う
-//     try {
-//         $db = getDb();
-//     } catch (PDOException $e) {
-//         exit('データベースに接続できませんでした。'.$e->getMessage());
-//     }
-
-//     //データ表示SQL作成
-//     $stmt = $db->prepare("SELECT * FROM $tableName where title = '${title}'");
-//     $status = $stmt->execute();
-
-//     $viewSearch = "";
-//     if($status==false) {
-//         //execute（SQL実行時にエラーがある場合）
-//       $error = $stmt->errorInfo();
-//       exit("ErrorQuery:".$error[2]);
-//     }else{
-//       $searchResalt = createView($stmt);
-//       if(empty($searchResalt)){
-//         $viewSearch = '<p class="search-msg">検索結果がありません</p>';
-//       }else{
-//         $viewSearch = $searchResalt;
-//       }
-      
-//     }
-    
-// }
 
 // tray~catch命令でDB接続関数getDb()を呼び出し接続を行う
 try {
@@ -46,25 +18,18 @@ try {
 }
 
 //データ表示SQL作成
-$stmt = $db->prepare("SELECT * FROM $tableName");
+$stmt = $db->prepare("SELECT * FROM $tableName WHERE user_id =:id");
+$stmt->bindValue(':id',$user_id,PDO::PARAM_STR);
 $status = $stmt->execute();
-//データ表示SQL作成
-$countSQL = $db->prepare("SELECT COUNT(record_id) FROM $tableName");
-$count_status = $countSQL->execute();
-
-
 
 //データ表示
-$count_view="";
 $viewTables="";
-if($status==false || $count_status==false) {
+if($status==false) {
     //execute（SQL実行時にエラーがある場合）
   $error = $stmt->errorInfo();
   exit("ErrorQuery:".$error[2]);
 }else{
   $viewTables = createView($stmt);
-  $count_result = $countSQL->fetch(PDO::FETCH_ASSOC);
-
 }
 ?>
 
@@ -80,8 +45,8 @@ if($status==false || $count_status==false) {
 </head>
 <body>
     <div class="head">
+        <h1>ようこそ<?=$user_name?>さん</h1>
         <h1><?=date("Y年m月d日")?>現在の読書履歴</h1>
-        <p class="read-record">通算読破数：<?=$count_result['COUNT(record_id)']?>冊</p>
     </div>
     <div class="search-area">
         <div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 2019 年 6 月 13 日 22:22
+-- Generation Time: 2019 年 6 月 24 日 22:10
 -- サーバのバージョン： 10.1.38-MariaDB
 -- PHP Version: 7.3.4
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `books_record` (
   `record_id` int(12) NOT NULL,
+  `user_id` int(12) NOT NULL,
   `title` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `author` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `genre` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
@@ -46,8 +47,10 @@ CREATE TABLE `books_record` (
 -- テーブルのデータのダンプ `books_record`
 --
 
-INSERT INTO `books_record` (`record_id`, `title`, `author`, `genre`, `reed_date`, `judge`, `impression`, `quotation_01`, `quotation_02`, `quotation_03`, `indate`) VALUES
-(17, '海辺のカフカ', '芥川龍之介', '純文学', '2019-06-02', 'とても面白い', '感想のテスト', 'テストのフレーズ', 'テストのフレーズ', 'テストのフレーズ', '2019-06-05 20:41:15');
+INSERT INTO `books_record` (`record_id`, `user_id`, `title`, `author`, `genre`, `reed_date`, `judge`, `impression`, `quotation_01`, `quotation_02`, `quotation_03`, `indate`) VALUES
+(19, 5, 'テストの本', 'テスト太郎', '純文学', '2019-06-24', 'とても面白い', 'テストの感想', 'あああああああああ', 'いいいいいいいいいい', 'うううううううううう', '2019-06-24 20:44:21'),
+(20, 5, '海辺のカフカ', '村上春樹', '純文学', '2019-06-24', 'とても面白い', '感想感想', 'えええええええ', 'おおおおおおおお', 'ああああああああ', '2019-06-24 21:02:32'),
+(21, 6, '羅生門', '芥川龍之介', '純文学', '2019-06-24', '面白い', 'テストの感想', 'あああああああ', 'いいいいいいい', 'ううううううう', '2019-06-24 22:08:39');
 
 -- --------------------------------------------------------
 
@@ -69,7 +72,8 @@ CREATE TABLE `user_table` (
 --
 
 INSERT INTO `user_table` (`user_id`, `user_name`, `login_id`, `login_pass`, `admin_flg`, `life_flg`) VALUES
-(1, '海老原', 'testid', 'testpw', 0, 1);
+(5, '海老原', 'testid', 'testpw', 0, 1),
+(6, '田中太郎', 'tanaka', 'tanakapw', 0, 1);
 
 --
 -- Indexes for dumped tables
@@ -95,13 +99,13 @@ ALTER TABLE `user_table`
 -- AUTO_INCREMENT for table `books_record`
 --
 ALTER TABLE `books_record`
-  MODIFY `record_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `record_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `user_table`
 --
 ALTER TABLE `user_table`
-  MODIFY `user_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

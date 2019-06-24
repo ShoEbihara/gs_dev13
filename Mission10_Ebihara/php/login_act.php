@@ -30,7 +30,8 @@ $val = $stmt->fetch();         //1レコードだけ取得する方法
 if( $val["user_id"] != "" ){
   //Login成功時
   $_SESSION["chk_ssid"]  = session_id();
-  $_SESSION["name"]      = $val['user_name'];
+  $_SESSION["user_id"]   = $val['user_id'];
+  $_SESSION["user_name"]   = $val['user_name'];
   header("Location: record.php");
 }else{
   //Login失敗時(Logout経由)

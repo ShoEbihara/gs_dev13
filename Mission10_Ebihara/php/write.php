@@ -1,7 +1,13 @@
 <?php
+    // セッションを利用する
+    session_start();
+
     // 関数を定義したファイルを読み込む
     require_once 'funcs.php';
-
+    
+    // セッション変数に保存されたuser_idを取得する
+    $user_id = $_SESSION["user_id"];
+    
     // POST送信された内容を受け取る
     $title = $_POST["title"];
     $author = $_POST["author"];
@@ -28,15 +34,16 @@
 
     // DBオブジェクトにbindValueで値を渡す
     $stmt = $db->prepare($sql);
-    $stmt->bindValue(':a1',$title,PDO::PARAM_STR);
-    $stmt->bindValue(':a2',$author,PDO::PARAM_STR);
-    $stmt->bindValue(':a3',$genre,PDO::PARAM_STR);
-    $stmt->bindValue(':a4',$date,PDO::PARAM_STR);
-    $stmt->bindValue(':a5',$judge,PDO::PARAM_STR);
-    $stmt->bindValue(':a6',$text,PDO::PARAM_STR);
-    $stmt->bindValue(':a7',$quotation_01,PDO::PARAM_STR);
-    $stmt->bindValue(':a8',$quotation_02,PDO::PARAM_STR);
-    $stmt->bindValue(':a9',$quotation_03,PDO::PARAM_STR);
+    $stmt->bindValue(':a1',$user_id,PDO::PARAM_STR);
+    $stmt->bindValue(':a2',$title,PDO::PARAM_STR);
+    $stmt->bindValue(':a3',$author,PDO::PARAM_STR);
+    $stmt->bindValue(':a4',$genre,PDO::PARAM_STR);
+    $stmt->bindValue(':a5',$date,PDO::PARAM_STR);
+    $stmt->bindValue(':a6',$judge,PDO::PARAM_STR);
+    $stmt->bindValue(':a7',$text,PDO::PARAM_STR);
+    $stmt->bindValue(':a8',$quotation_01,PDO::PARAM_STR);
+    $stmt->bindValue(':a9',$quotation_02,PDO::PARAM_STR);
+    $stmt->bindValue(':a10',$quotation_03,PDO::PARAM_STR);
 
     // SQL実行
     $flag = $stmt->execute();

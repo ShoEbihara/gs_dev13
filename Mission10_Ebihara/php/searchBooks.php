@@ -1,6 +1,8 @@
 <?php
 //必ずsession_startは最初に記述
 session_start();
+// セッション変数に保存されたuser_idを取得する
+$user_id = $_SESSION["user_id"];
 
 // 関数を定義したファイルを読み込む
 require_once 'funcs.php';
@@ -14,8 +16,9 @@ try {
 }
 
 //データ表示SQL作成
-$stmt = $db->prepare("SELECT * FROM $tableName WHERE title LIKE :title");
+$stmt = $db->prepare("SELECT * FROM $tableName WHERE title LIKE :title AND user_id =:id" );
 $stmt->bindValue(":title",'%'.$title.'%');
+$stmt->bindValue(':id',$user_id,PDO::PARAM_STR);
 $status = $stmt->execute();
 
 $viewSearch = "";
